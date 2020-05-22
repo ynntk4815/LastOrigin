@@ -1,0 +1,118 @@
+<div class="tab_expedscorer">
+    <div class="page_title">
+        遠征計算機
+    </div>
+
+    <div class="expedNumBoxes page_panel">
+        <div id="expedNumBoxContainer" />
+
+        <div class="expedNumBox fleetCounts">
+            <div class="fleetCount">
+                <div class="fleetRadio"><input type="radio" name="fleetCount" value="1" /></div>
+                <div class="fleetText">1 隊</div>
+                <div class="clear"></div>
+            </div>
+            <div class="fleetCount">
+                <div class="fleetRadio"><input type="radio" name="fleetCount" value="2" /></div>
+                <div class="fleetText">2 隊</div>
+                <div class="clear"></div>
+            </div>
+            <div class="fleetCount">
+                <div class="fleetRadio"><input type="radio" name="fleetCount" value="3" /></div>
+                <div class="fleetText">3 隊</div>
+                <div class="clear"></div>
+            </div>
+            <div class="fleetCount">
+                <div class="fleetRadio"><input type="radio" name="fleetCount" value="4" CHECKED /></div>
+                <div class="fleetText">4 隊</div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+    <div class="expedControls page_panel">
+
+        <!-- Resource Priorities -->
+        <div class="control_box control_priorities">
+            <div class="control_title">資源權重</div>
+            <div class="clear"></div>
+            <div class="control">
+                <div class="control_label"><img src="assets/icon_part.png" title="part" /></div>
+                <div class="control_input"><input type="number" class="priorityPart" value="0" /></div>
+                <div class="clear"></div>
+            </div>
+            <div class="control">
+                <div class="control_label"><img src="assets/icon_nutrient.png" title="nutrient" /></div>
+                <div class="control_input"><input type="number" class="priorityNutrient" value="0" /></div>
+                <div class="clear"></div>
+            </div>
+            <div class="control">
+                <div class="control_label"><img src="assets/icon_power.png" title="power" /></div>
+                <div class="control_input"><input type="number" class="priorityPower" value="0" /></div>
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+
+        <!-- AFK Time -->
+        <div class="control_box control_afktime">
+            <div class="control_title">間隔時間</div>
+            <div class="clear"></div>
+            <div class="control">
+                <div class="control_label">Hrs</div>
+                <div class="control_input"><input type="number" class="afkH" value="0" /></div>
+                <div class="clear"></div>
+            </div>
+            <div class="control">
+                <div class="control_label">Mins</div>
+                <div class="control_input"><input type="number" class="afkM" value="0" /></div>
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        <!-- Calculate button -->
+        <div class="control_box control_calculate">
+            <div class="calculate_btn hover">計算</div>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+    <div class="page_padding">
+
+        <!-- Results Table -->
+        <table class="table table-hover results">
+            <thead>
+                <tr>
+                    <th>組合</th>
+                    <th><img src="assets/icon_part.png" title="part" /> /<span class="unitTime"></span></th>
+                    <th><img src="assets/icon_nutrient.png" title="nutrient" /> /<span class="unitTime"></span></th>
+                    <th><img src="assets/icon_power.png" title="power" /> /<span class="unitTime"></span></th>
+                    <th>值</th>
+                    <th>資源總和</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+
+    </div>
+
+    <div class="factory">
+
+        <!-- Expedition checkboxes for candidates -->
+        <div class="expedNum">
+            <div class="expedCheck"><input type="checkbox" CHECKED /></div>
+            <div class="expedText"></div>
+            <div class="expedTime"></div>
+            <div class="expedFixedCheck xhidden"><input type="checkbox" /></div>
+            <div class="clear"></div>
+        </div>
+
+        <!-- Expedition result row -->
+
+    </div>
+</div>
