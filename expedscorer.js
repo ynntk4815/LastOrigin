@@ -140,13 +140,25 @@ function calcWithExpeditionIdsFleetCountJS(fleetCount, priorityPart, priorityNut
         selectedFixedItems) {
     var expeds = [];
     var result = [];
+    var perUnitTime = 60;
 
     $.ajaxSetup({
         async: false
     });
     $.getJSON("explorations.json", function(data) {
         $.each(data.data, function(key, val) {
-            expeds.push(val);
+            var exped = val;
+            var expedTime = getExpedMinutesTime(exped);
+            var ratio = 0.0;
+            if (afkTime > 0) {
+                var times = expedTime / afkTime;
+                ratio = 1 / Math.ceil(times);
+            } else {
+                ratio = 1.0 / expedTime * perUnitTime;
+            }
+            exped.ratio = ratio;
+
+            expeds.push(exped);
         });
     }).fail(function() {
         alert("test2");
@@ -157,27 +169,7 @@ function calcWithExpeditionIdsFleetCountJS(fleetCount, priorityPart, priorityNut
     //    ids.push(val.id);
     //});
 
-    var perUnitTime = 60;
     var ids = selectedItems;
-    if (afkTime > 0) {
-        ids = [];
-        selectedItems.forEach(function(val) {
-            var grepList = $.grep(expeds, function(e){ return e.id == val; });
-            var exped = grepList[0];
-
-            var expedTime = getExpedMinutesTime(exped);
-            if (getExpedMinutesTime(exped) > afkTime) {
-                if (expedTime % afkTime == 0) {
-                    ids.push(val);
-                } else {
-                    //ids.push(val);
-                }
-            } else {
-                ids.push(val);
-            }
-        });
-    }
-
     ids = $(ids).not(selectedFixedItems).get();
     idset = combine(ids, fleetCount - selectedFixedItems.length, selectedFixedItems);
     idset.forEach(function(val) {
@@ -198,23 +190,9 @@ function calcWithExpeditionIdsFleetCountJS(fleetCount, priorityPart, priorityNut
             var incomeNutrient = 0;
             var incomePower = 0;
 
-            var expedTime = getExpedMinutesTime(exped);
-
-            if (afkTime > 0) {
-                if (getExpedMinutesTime(exped) > afkTime) {
-                    incomePart = exped.part / expedTime * afkTime;
-                    incomeNutrient = exped.nutrient / expedTime * afkTime;
-                    incomePower = exped.power / expedTime * afkTime;
-                } else {
-                    incomePart = exped.part;
-                    incomeNutrient = exped.nutrient;
-                    incomePower = exped.power;
-                }
-            } else {
-                incomePart = exped.part / expedTime * perUnitTime;
-                incomeNutrient = exped.nutrient / expedTime * perUnitTime;
-                incomePower = exped.power / expedTime * perUnitTime;
-            }
+            incomePart = exped.part * exped.ratio;
+            incomeNutrient = exped.nutrient * exped.ratio;
+            incomePower = exped.power * exped.ratio;
 
             eCombine.part += incomePart;
             eCombine.nutrient += incomeNutrient;
