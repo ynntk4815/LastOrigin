@@ -105,9 +105,6 @@ function p(){
         var unitTimes = $(".tab_expedscorer .results .unitTime");
         unitTimes.each(function() {
             var str = "hr";
-            if (afkTime > 0) {
-                str = afkHH + "h" + afkMM + "m";
-            }
             $(this).empty();
             $(this).append(str);
         });
@@ -152,7 +149,7 @@ function calcWithExpeditionIdsFleetCountJS(fleetCount, priorityPart, priorityNut
             var ratio = 0.0;
             if (afkTime > 0) {
                 var times = expedTime / afkTime;
-                ratio = 1 / Math.ceil(times);
+                ratio = 1 / Math.ceil(times) / afkTime * perUnitTime;
             } else {
                 ratio = 1.0 / expedTime * perUnitTime;
             }
