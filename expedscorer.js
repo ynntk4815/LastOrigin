@@ -85,9 +85,10 @@ function p(){
         });
 
         var fleetCount = parseInt( $(".tab_expedscorer .fleetCounts input:checked").val(), 10);
+        var isAfkOneTime = $("#afkOneTime").is(":checked");
 
         var results = calcWithExpeditionIdsFleetCountJS(fleetCount, priorityPart, priorityNutrient, priorityPower, selectedItems, afkTime,
-                selectedFixedItems);
+                selectedFixedItems, isAfkOneTime);
 
         resultTable.empty();
         for (var i = 0; i < results.length && i < 50; ++i) {
@@ -134,7 +135,7 @@ function getExpedMinutesTime(exped) {
 }
 
 function calcWithExpeditionIdsFleetCountJS(fleetCount, priorityPart, priorityNutrient, priorityPower, selectedItems, afkTime,
-        selectedFixedItems) {
+        selectedFixedItems, isAfkOneTime) {
     var expeds = [];
     var result = [];
     var perUnitTime = 60;
@@ -148,8 +149,16 @@ function calcWithExpeditionIdsFleetCountJS(fleetCount, priorityPart, priorityNut
             var expedTime = getExpedMinutesTime(exped);
             var ratio = 0.0;
             if (afkTime > 0) {
-                var times = expedTime / afkTime;
-                ratio = 1 / Math.ceil(times) / afkTime * perUnitTime;
+                if (isAfkOneTime) {
+                    if (expedTime > afkTime) {
+                        ratio = 1.0 / expedTime * perUnitTime;
+                    } else {
+                        ratio = 1.0 / afkTime * perUnitTime;
+                    }
+                } else {
+                    var times = expedTime / afkTime;
+                    ratio = 1 / Math.ceil(times) / afkTime * perUnitTime;
+                }
             } else {
                 ratio = 1.0 / expedTime * perUnitTime;
             }
